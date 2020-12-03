@@ -15,6 +15,11 @@
   </div>
   <div class="footer">
     <router-link to="/admin">Admin</router-link>
+        <div>Created By: Jasmine Webb</div>
+        <div>
+          <a class="source-link" href="https://github.com/BYU-CS-260-Winter-2020/lab-4-museum-of-ordinary-objects-jasminejwebb">GitHub Repository</a>
+        </div>
+
   </div>
 </div>
 </template>
