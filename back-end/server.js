@@ -10,50 +10,49 @@ app.use(bodyParser.urlencoded({
 const mongoose = require('mongoose');
 
 // connect to the database
-mongoose.connect('mongodb://localhost:27017/museum', {
+mongoose.connect('mongodb://localhost:27017/creativeProject4', {
     useNewUrlParser: true
 });
 
-// Configure multer so that it will upload to '../front-end/public/images'
-const multer = require('multer')
-const upload = multer({
-    dest: '../front-end/public/images/',
-    limits: {
-        fileSize: 10000000
-    }
-});
 
 // Create a scheme for items in the museum: a title and a path to an image.
 const itemSchema = new mongoose.Schema({
     title: String,
-    path: String,
+    category: String,
+    date: Date,
+});
+
+const categorySchema = new mongoose.Schema({
+    category: String,
 });
 
 // Create a model for items in the museum.
 const Item = mongoose.model('Item', itemSchema);
-
-// Upload a photo. Uses the multer middleware for the upload and then returns
-// the path where the photo is stored in the file system.
-app.post('/api/photos', upload.single('photo'), async(req, res) => {
-    // Just a safety check
-    if (!req.file) {
-        return res.sendStatus(400);
-    }
-    res.send({
-        path: "/images/" + req.file.filename
-    });
-});
+const Category = mongoose.model('Category', categorySchema);
 
 
 // Create a new item in the museum: takes a title and a path to an image.
 app.post('/api/items', async(req, res) => {
     const item = new Item({
         title: req.body.title,
-        path: req.body.path,
+        category: req.body.category,
+        date: req.body.date,
     });
     try {
         await item.save();
         res.send(item);
+    } catch (error) {
+        console.log(error);
+        res.sendStatus(500);
+    }
+});
+app.post('/api/categories', async(req, res) => {
+    const category = new Category({
+        category: req.body.category,
+    });
+    try {
+        await category.save();
+        res.send(category);
     } catch (error) {
         console.log(error);
         res.sendStatus(500);
@@ -65,6 +64,16 @@ app.get('/api/items', async(req, res) => {
     try {
         let items = await Item.find();
         res.send(items);
+    } catch (error) {
+        console.log(error);
+        res.sendStatus(500);
+    }
+});
+
+app.get('/api/categories', async(req, res) => {
+    try {
+        let categories = await Category.find();
+        res.send(categories);
     } catch (error) {
         console.log(error);
         res.sendStatus(500);
@@ -83,4 +92,16 @@ app.delete('/api/items/:id', async(req, res) => {
     }
 });
 
-app.listen(3000, () => console.log('Server listening on port 3000!'));
+app.delete('/api/categories/:id', async(req, res) => {
+    try {
+        await Category.deleteOne({
+            _id: req.params.id
+        });
+        res.sendStatus(200);
+    } catch (error) {
+        console.log(error);
+        res.sendStatus(500);
+    }
+});
+
+app.listen(3005, () => console.log('Server listening on port 3005!'));

@@ -1,81 +1,165 @@
 <template>
 <div id="app">
-  <div class="header">
-    <router-link to="/">
-      <div class="logo">
-        <img src="/ToDoLogo.png">
-      </div>
-    </router-link>
-    <div class="title">
-      <h1>Much To Do</h1>
-      <h2><em>A To-Do List For All Your Needs</em></h2>
+  <app-header>
+  <div id="menu">
+    <div id="brand">
+      <router-link to="/">
+      <h1>MUCH TO DO</h1>
+      <h2>A To-Do List For All Your Needs</h2>
+      </router-link>
     </div>
   </div>
-  <div class="content">
-    <router-view />
+  <div id = "navBar">
+    <div id="side">
+      <router-link to="/">
+        <div class="menu-item browse">
+          <p>Home</p>
+        </div>
+      </router-link>
+      <router-link to="/dashboard">
+        <div class="menu-item browse">
+          <p>Dashboard</p>
+        </div>
+      </router-link>
+      <router-link to="/recipes">
+        <div class="menu-item">
+          <p>Recipes</p>
+        </div>
+      </router-link>
+    </div>
   </div>
-  <div class="footer">
-    <router-link to="/admin">Admin</router-link>
+  </app-header>
+  <router-view></router-view>
+  <app-footer>
+    
+    <footer class = "footer">
         <div>Created By: Jasmine Webb</div>
         <div>
-          <a class="source-link" href="https://github.com/BYU-CS-260-Winter-2020/lab-4-museum-of-ordinary-objects-jasminejwebb">GitHub Repository</a>
+          <a class="source-link" href="https://github.com/jasminejwebb/MockBlogWithVue">GitHub Repository</a>
         </div>
-
-  </div>
+    </footer>
+  </app-footer>
 </div>
 </template>
 
+<script>
+export default {
+  name: 'app',
+  computed: {
+    numberOfItems() {
+      let numItems = 0; 
+      for(let item of this.$root.$data.cart)
+      {
+        numItems += item.quantity;  
+      }
+      return numItems;
+    }
+  }
+}
+</script>
+
 <style>
-html {
+html{
   box-sizing: border-box;
 }
 
-body {
-  font-family: 'Montserrat', sans-serif;
-  font-size: 16px;
-  background: #fff;
-  padding: 0px;
+#menu {
+  display: flex;
+  align-items: left;
+  padding-left: 5em; 
+  background-color: #06174e;
+}
+
+#menu a {
+  color: #f7f9fd;
+  text-decoration: none;
+}
+#navBar {
+  display: flex;
+  align-items: left;
+  padding: 0.3em;
+  padding-left: 5em; 
+  padding-bottom: 0em;
+  background-color: #b59dbf;
+}
+
+#navBar a {
+  color: #f7f9fd;
+  text-decoration: none;
+}
+
+#brand {
+  grid-area: brand;
+  display: flex;
+  justify-content: left;
+  font-size: 1.25em;
+  text-transform: capitalize;
+  font-weight: bolder;  
+}
+.menu h1{
+  margin-bottom: 10px; 
+}
+.menu h2{
+  font-size: 1em; 
+  font-style: italic; 
+  margin-bottom: 30px; 
+}
+#side {
+  grid-area: side;
+  display: flex;
+  justify-content: flex-front;
+}
+.router-view{
+  min-height: 100vh !important; 
+}
+
+.menu-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.menu-item p {
   margin: 0px;
 }
 
-/* Header */
-.header {
-  display: flex;
-  padding: 10px 100px 0px 100px;
-  background-color: #d4ceda;
-  color: #505711;
+.browse {
+  margin-right: 50px;
+  padding-bottom: 1em;
 }
 
-.title {
-  margin-top: 5px;
-}
-
-.title h1 {
-  font-size: 30px;
-}
-
-.content {
-  padding: 20px 100px;
-  min-height: 500px;
-}
-
-/* Footer */
 .footer {
-  height: 50px;
-  padding: 20px 100px 0px 100px;
-  background: #e3e3e3;
-  font-size: 12px;
-}
+  background-color: #b59dbf;
+  border-top: 1px black;
+  margin: 0px 0px;
+  margin-bottom: 0;
+  display: flex; 
+  justify-content: space-between;
+  color: #f7f9fd;
 
+}
+.footer > div {
+  margin: .5em; 
+  padding: auto; 
+}
 .footer a {
-  color: #000;
+  color: #f7f9fd;
+  text-decoration: none;
 }
 
-h1 {
-  font-size: 20px;
+body {
+    color: #06174e;
+    background-color: #ffffff;
+    font-size: 18px;
+    font-family: "Segoe UI", "Arial Regular", sans-serif;
 }
 
-h2 {
-  font-size: 14px;
+.bg-dark {
+    background-color: #3f3f3f !important;
 }
+
+.bg-light {
+    background-color: #89b0ae !important;
+}
+
 </style>

@@ -37,6 +37,9 @@ export default {
 </script>
 
 <style scoped>
+.home{
+  min-height: 70vh !important; 
+}
 .image h2 {
   font-style: italic;
 }
