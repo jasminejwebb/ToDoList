@@ -3,18 +3,19 @@
   <div class="header">
     <router-link to="/">
       <div class="logo">
-        <img src="/ordinary.png">
+        <img src="/ToDoLogo.png">
       </div>
     </router-link>
     <div class="title">
-      <h1>Museum of Ordinary Objects</h1>
+      <h1>Much To Do</h1>
+      <h2><em>A To-Do List For All Your Needs</em></h2>
     </div>
   </div>
   <div class="content">
     <router-view />
   </div>
   <div class="footer">
-    <router-link to="/admin">Admin</router-link>
+    <p>ADD FOOTER STUFF</p> 
   </div>
 </div>
 </template>
@@ -36,8 +37,8 @@ body {
 .header {
   display: flex;
   padding: 10px 100px 0px 100px;
-  background-color: #5BDEFF;
-  color: #1C454F;
+  background-color: #d4ceda;
+  color: #505711;
 }
 
 .title {
