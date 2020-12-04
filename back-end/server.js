@@ -20,6 +20,7 @@ const itemSchema = new mongoose.Schema({
     title: String,
     category: String,
     date: Date,
+    completed: Boolean, 
 });
 
 const categorySchema = new mongoose.Schema({
@@ -37,6 +38,7 @@ app.post('/api/items', async(req, res) => {
         title: req.body.title,
         category: req.body.category,
         date: req.body.date,
+        completed: false,
     });
     try {
         await item.save();
@@ -53,6 +55,31 @@ app.post('/api/categories', async(req, res) => {
     try {
         await category.save();
         res.send(category);
+    } catch (error) {
+        console.log(error);
+        res.sendStatus(500);
+    }
+});
+app.put('/api/completed/:id', async(req, res) => {
+    try {
+        await Item.updateOne({
+            _id: req.params.id},
+            { $set: {completed:true } 
+        });
+        res.sendStatus(200);
+    } catch (error) {
+        console.log(error);
+        res.sendStatus(500);
+    }
+});
+
+app.put('/api/uncompleted/:id', async(req, res) => {
+    try {
+        await Item.updateOne({
+            _id: req.params.id},
+            { $set: {completed:false } 
+        });
+        res.sendStatus(200);
     } catch (error) {
         console.log(error);
         res.sendStatus(500);
